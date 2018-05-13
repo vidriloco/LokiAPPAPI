@@ -3,7 +3,10 @@ Rails.application.routes.draw do
       resources :authorities
       resources :routes
       resources :users
-
+      resources :vehicles
+      resources :positions
+      resources :tracking_allowances
+      
       root to: "routes#index"
     end
   #root to: "home#index"
