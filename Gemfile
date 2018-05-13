@@ -27,7 +27,8 @@ gem 'pg'
 gem 'devise'
 gem 'activerecord-postgis-adapter'
 gem 'pry'
-gem 'rails_admin', '~> 1.3'
+gem 'administrate'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rgeo-geojson'
