@@ -5,6 +5,7 @@ class CreateRoutes < ActiveRecord::Migration[5.2]
       t.string      :description
       t.integer     :authority_id
       t.text        :geojson_data
+      t.boolean     :is_active, default: true
       t.timestamps
     end
   end

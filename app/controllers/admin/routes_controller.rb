@@ -1,14 +1,5 @@
 module Admin
   class RoutesController < Admin::ApplicationController
-    # To customize the behavior of this controller,
-    # you can overwrite any of the RESTful actions. For example:
-    #
-    # def index
-    #   super
-    #   @resources = Route.
-    #     page(params[:page]).
-    #     per(10)
-    # end
     
     def create
       resource = resource_class.new(route_resource_params)
@@ -21,6 +12,22 @@ module Admin
         )
       else
         render :new, locals: {
+          page: Administrate::Page::Form.new(dashboard, resource),
+        }
+      end
+    end
+    
+    def update
+      resource = resource_class.find(params[:id])
+      authorize_resource(resource)
+
+      if resource.update(route_resource_params)
+        redirect_to(
+          [namespace, resource],
+          notice: translate_with_resource("update.success"),
+        )
+      else
+        render :edit, locals: {
           page: Administrate::Page::Form.new(dashboard, resource),
         }
       end

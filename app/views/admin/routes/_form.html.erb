@@ -41,8 +41,14 @@ and renders all form fields for a resource's editable attributes.
 				  <label for="route_name">GeoJSON path</label>
 				</div>
 				<div class="field-unit__field">
+					<p><b>Select a valid GEOJson file</b></p>
 					<%= f.file_field :geojson_data %>
+					<% if page.resource.persisted? %>
+						<%= render partial: 'admin/routes/map', locals: { geojson_data: page.resource.geojson_data, coordinates: page.resource.coordinates_list } %>
+					<% end %>
+					
 				</div>
+				
 			<% else %>
       	<%= render_field attribute, f: f %>
 			<% end -%>

@@ -1,0 +1,29 @@
+<div id="map" style="width: 100%; height: 400px;"></div>
+
+<%= content_for :javascript do %>
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
+	
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1Ijoidmlkcmlsb2NvIiwiYSI6ImNpdmp6OWtkeTAwOXcyeXBmdzdjbzBkYXYifQ.EXo7HsO4PNRvxM72vt3yAg';
+		var map = new mapboxgl.Map({
+			container: 'map',
+	    style: 'mapbox://styles/mapbox/streets-v9',
+	    center: [-99.133209, 19.432608],
+	    zoom: 10
+		});
+		
+		map.on('load', function () {
+			map.addLayer(<%= geojson_data.html_safe %>);
+			
+			var coordinates = <%= coordinates %>;
+			var bounds = coordinates.reduce(function(bounds, coord) {
+          return bounds.extend(coord);
+      }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
+      map.fitBounds(bounds, {
+          padding: 40
+      });
+		});
+	</script>
+<% end %>
