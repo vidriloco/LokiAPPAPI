@@ -36,7 +36,8 @@ module Admin
     private
     
     def route_resource_params
-      resource_params.merge(geojson_data: resource_params[:geojson_data].read)
+      return resource_params.merge(geojson_data: resource_params[:geojson_data].read) if resource_params.has_key?(:geojson_data)
+      resource_params
     end
   end
 end
