@@ -1,9 +1,11 @@
 class Api::RegistrationsController < Api::BaseController
   
+  respond_to :json
+  
   def create
-    user = User.new(params[:user])
+    user = User.new(registration_params)
     if user.save
-      render json: user.as_json(auth_token: user.authentication_token, email: user.email), status: 201
+      render json: user.authentication_fields.merge({ success: true })
       return
     else
       warden.custom_failure!
@@ -11,4 +13,7 @@ class Api::RegistrationsController < Api::BaseController
     end
   end
   
+  def registration_params
+    params.require(:registration).permit(:username, :email, :password)
+  end
 end

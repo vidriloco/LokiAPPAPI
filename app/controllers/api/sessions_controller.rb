@@ -9,7 +9,7 @@ class Api::SessionsController < Api::BaseController
     
     if resource.valid_password?(params[:session][:password])
       sign_in("user", resource)
-      render :json=> { success: true, auth_token: resource.authentication_token, login: resource.login, email: resource.email }
+      render json: resource.authentication_fields.merge({ success: true })
       return
     end
     

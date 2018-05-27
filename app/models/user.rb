@@ -3,10 +3,31 @@ class User < ApplicationRecord
   has_many :tracking_allowances
   has_many :routes, through: 'tracking_allowances'
   
+  before_save :ensure_authentication_token
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :validatable, authentication_keys: [:login]
-         
+
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
+
+  def authentication_fields
+    { auth_token: self.authentication_token, username: self.username, email: self.email }
+  end
+  
+  private
+  
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
+
   def login=(login)
     @login = login
   end

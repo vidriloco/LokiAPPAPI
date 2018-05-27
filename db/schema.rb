@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2018_05_13_213828) do
     t.string "description"
     t.integer "authority_id"
     t.text "geojson_data"
+    t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -53,6 +54,7 @@ ActiveRecord::Schema.define(version: 2018_05_13_213828) do
     t.string "email", default: "", null: false
     t.string "username", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "authentication_token"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
