@@ -1,15 +1,15 @@
 class Api::RegistrationsController < Api::BaseController
+  include ApplicationHelper
   
   respond_to :json
   
   def create
     user = User.new(registration_params)
     if user.save
-      render json: user.authentication_fields.merge({ success: true })
-      return
+      render json: authentication_fields_for(user), status: 200
     else
       warden.custom_failure!
-      render json: user.errors, status: 422
+      render json: error_message_for(user), status: 422
     end
   end
   

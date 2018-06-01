@@ -14,10 +14,6 @@ class User < ApplicationRecord
       self.authentication_token = generate_authentication_token
     end
   end
-
-  def authentication_fields
-    { auth_token: self.authentication_token, username: self.username, email: self.email }
-  end
   
   private
   

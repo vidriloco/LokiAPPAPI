@@ -1,4 +1,5 @@
 class Api::SessionsController < Api::BaseController
+  include ApplicationHelper
     
   before_action :ensure_params_exist
   respond_to :json
@@ -9,7 +10,7 @@ class Api::SessionsController < Api::BaseController
     
     if resource.valid_password?(params[:session][:password])
       sign_in("user", resource)
-      render json: resource.authentication_fields.merge({ success: true })
+      render json: authentication_fields_for(resource), status: 200
       return
     end
     
