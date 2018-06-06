@@ -14,7 +14,7 @@ class Path < ApplicationRecord
   end
   
   def direction_name
-    Path.direction_names[direction]
+    Path.direction_names[direction || Path.direction_symbols.index(:both)]
   end
   
   def direction_symbol
