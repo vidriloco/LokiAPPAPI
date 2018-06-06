@@ -39,7 +39,7 @@ and renders all form fields for a resource's editable attributes.
 	
     <div class="field-unit field-unit--<%= attribute.html_class %>">
 			<% if attribute.name.eql?("coordinates") -%>
-				<div class="field-unit__label"></div>
+				<div class="field-unit__label"><label for="path_coordinates">Route map</label></div>
 				<div class="field-unit__field">
 					
 					<% if page.resource.persisted? %>

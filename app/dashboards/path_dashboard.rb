@@ -11,6 +11,7 @@ class PathDashboard < Administrate::BaseDashboard
     route: Field::BelongsTo,
     id: Field::Number,
     coordinates: Field::String,
+    direction: Field::Number,
     direction_name: Field::Select.with_options(collection: Path.direction_names),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,

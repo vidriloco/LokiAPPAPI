@@ -12,10 +12,10 @@ class Route < ApplicationRecord
   end
   
   def api_fields
-    { id: id, name: name, subtitle: description, imageUrl: image_url, paths: paths }
+    { id: id, name: name, subtitle: description, imageUrl: image_url, color: color, stroke: stroke, paths: paths.map(&:api_fields) }
   end
   
   def self.discoverable_by(user)
-    Route.includes(tracking_allowances: :user).where({tracking_allowances: { allowed_to_track: true }, routes: { is_active: true }, tracking_allowances: { user_id: user.id }}).map(&:api_fields)
+    Route.includes(tracking_allowances: :user).where({tracking_allowances: { allowed_to_track: true, user_id: user.id }, routes: { is_active: true }}).map(&:api_fields)
   end
 end

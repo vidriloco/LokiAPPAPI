@@ -35,19 +35,6 @@ as well as a link to its edit page.
 <section class="main-content__body">
   <dl>
     <% page.attributes.each do |attribute| %>
-
-			<% if attribute.name.eql?("geojson_data") -%>
-	      <dt class="attribute-label" id="<%= attribute.name %>">
-	      <%= t(
-	        "helpers.label.#{resource_name}.#{attribute.name}",
-	        default: "Route map",
-	      ) %>
-	      </dt>
-			
-	      <dd class="attribute-data attribute-data--<%=attribute.html_class%>">
-					<%= render partial: 'admin/routes/map', locals: { geojson_data: page.resource.geojson_data, coordinates: page.resource.coordinates_list } %>
-				</dd>
-			<% end %>
 			
       <dt class="attribute-label" id="<%= attribute.name %>">
       <%= t(
@@ -58,6 +45,21 @@ as well as a link to its edit page.
 			
       <dd class="attribute-data attribute-data--<%=attribute.html_class%>"><%= render_field attribute %></dd>
 			
+			<% if attribute.name.eql?("coordinates") -%>
+	      <dt class="attribute-label" id="<%= attribute.name %>">
+	      <%= t(
+	        "helpers.label.#{resource_name}.#{attribute.name}",
+	        default: "Route map",
+	      ) %>
+	      </dt>
+			
+	      <dd class="attribute-data attribute-data--<%=attribute.html_class%>">
+					<%= render partial: 'admin/paths/map', locals: { 
+						coordinates: page.resource.as_coordinates_inverted_axis, 
+						color: page.resource.route.color, 
+						stroke: page.resource.route.stroke } %>
+				</dd>
+			<% end %>
     <% end %>
   </dl>
 </section>
