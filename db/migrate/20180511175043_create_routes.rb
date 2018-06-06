@@ -4,8 +4,12 @@ class CreateRoutes < ActiveRecord::Migration[5.2]
       t.string      :name
       t.string      :description
       t.integer     :authority_id
-      t.text        :geojson_data
+      t.string      :image_url
       t.boolean     :is_active, default: true
+      
+      t.string      :color
+      t.integer     :stroke
+      
       t.timestamps
     end
   end

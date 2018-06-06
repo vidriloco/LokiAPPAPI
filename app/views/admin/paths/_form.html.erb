@@ -35,22 +35,21 @@ and renders all form fields for a resource's editable attributes.
 
 	<!-- TODO: Improve this -->
   <% page.attributes.each do |attribute| -%>
+		<%= render_field attribute, f: f %>
+	
     <div class="field-unit field-unit--<%= attribute.html_class %>">
-			<% if attribute.name.eql?("geojson_data") -%>
-				<div class="field-unit__label">
-				  <label for="route_name">GeoJSON path</label>
-				</div>
+			<% if attribute.name.eql?("coordinates") -%>
+				<div class="field-unit__label"></div>
 				<div class="field-unit__field">
-					<p><b>Select a valid GEOJson file</b></p>
-					<%= f.file_field :geojson_data %>
+					
 					<% if page.resource.persisted? %>
-						<%= render partial: 'admin/routes/map', locals: { geojson_data: page.resource.geojson_data, coordinates: page.resource.coordinates_list } %>
+						<%= render partial: 'admin/paths/map', locals: { 
+							coordinates: page.resource.as_coordinates_inverted_axis, 
+							color: page.resource.route.color, 
+							stroke: page.resource.route.stroke } %>
 					<% end %>
 					
 				</div>
-				
-			<% else %>
-      	<%= render_field attribute, f: f %>
 			<% end -%>
     </div>
   <% end -%>

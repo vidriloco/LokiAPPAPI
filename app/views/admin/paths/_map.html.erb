@@ -9,13 +9,40 @@
 		var map = new mapboxgl.Map({
 			container: 'map',
 	    style: 'mapbox://styles/mapbox/streets-v9',
-	    center: [-99.133209, 19.432608],
+	    center: <%= coordinates[0] %>,
 	    zoom: 10
 		});
 		
+		var geojson = {
+		    "type": "FeatureCollection",
+		    "features": [{
+		        "type": "Feature",
+		        "geometry": {
+		            "type": "LineString",
+		            "properties": {},
+		            "coordinates": <%= coordinates %>
+		        }
+		    }]
+		};
+		
 		map.on('load', function () {
-			map.addLayer(<%= geojson_data.html_safe %>);
-			
+			map.addLayer({
+	        "id": "LineString",
+	        "type": "line",
+	        "source": {
+	            "type": "geojson",
+	            "data": geojson
+	        },
+	        "layout": {
+	            "line-join": "round",
+	            "line-cap": "round"
+	        },
+	        "paint": {
+	            "line-color": "<%= color %>",
+							"line-width": <%= stroke %>
+	        }
+	    });
+					
 			var coordinates = <%= coordinates %>;
 			var bounds = coordinates.reduce(function(bounds, coord) {
           return bounds.extend(coord);

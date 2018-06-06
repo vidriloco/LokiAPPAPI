@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class RouteDashboard < Administrate::BaseDashboard
+class PathDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,20 +8,10 @@ class RouteDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    vehicles: Field::HasMany,
-    positions: Field::HasMany,
-    tracking_allowances: Field::HasMany,
-    users: Field::HasMany,
-    paths: Field::HasMany,
-    authority: Field::BelongsTo,
+    route: Field::BelongsTo,
     id: Field::Number,
-    name: Field::String,
-    authority_name: Field::String,
-    description: Field::String,
-    image_url: Field::String,
-    is_active: Field::Boolean,
-    color: Field::String,
-    stroke: Field::Number,
+    coordinates: Field::String,
+    direction_name: Field::Select.with_options(collection: Path.direction_names),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -32,23 +22,19 @@ class RouteDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :vehicles,
-    :positions,
-    :tracking_allowances,
-    :users,
+    :route,
+    :id,
+    :coordinates,
+    :direction,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :authority,
+    :route,
     :id,
-    :authority_name,
-    :description,
-    :image_url,
-    :is_active,
-    :color,
-    :stroke,
+    :coordinates,
+    :direction_name,
     :created_at,
     :updated_at,
   ].freeze
@@ -57,19 +43,15 @@ class RouteDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :authority,
-    :name,
-    :description,
-    :image_url,
-    :is_active,
-    :color,
-    :stroke,
+    :route,
+    :coordinates,
+    :direction_name,
   ].freeze
 
-  # Overwrite this method to customize how routes are displayed
+  # Overwrite this method to customize how paths are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(route)
-    route.name
+  def display_resource(path)
+    "Path with ID: ##{path.id}"
   end
 end

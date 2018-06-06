@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  coordinates: MyString
+  color: MyString
+  stroke: 1.5
+  route_id: 1
+
+two:
+  coordinates: MyString
+  color: MyString
+  stroke: 1.5
+  route_id: 1

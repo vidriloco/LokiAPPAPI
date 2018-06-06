@@ -22,7 +22,6 @@ class AuthorityDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :routes,
     :id,
     :name,
     :url,
@@ -31,7 +30,6 @@ class AuthorityDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :routes,
     :id,
     :name,
     :url,
@@ -43,7 +41,6 @@ class AuthorityDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :routes,
     :name,
     :url,
   ].freeze
@@ -51,7 +48,7 @@ class AuthorityDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how authorities are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(authority)
-  #   "Authority ##{authority.id}"
-  # end
+  def display_resource(authority)
+    authority.name
+  end
 end

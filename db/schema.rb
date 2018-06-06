@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_13_213828) do
+ActiveRecord::Schema.define(version: 2018_06_05_220821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(version: 2018_05_13_213828) do
   create_table "authorities", force: :cascade do |t|
     t.string "name"
     t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "paths", force: :cascade do |t|
+    t.string "coordinates"
+    t.integer "direction"
+    t.integer "route_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -36,8 +44,10 @@ ActiveRecord::Schema.define(version: 2018_05_13_213828) do
     t.string "name"
     t.string "description"
     t.integer "authority_id"
-    t.text "geojson_data"
+    t.string "image_url"
     t.boolean "is_active", default: true
+    t.string "color"
+    t.integer "stroke"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
