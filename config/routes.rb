@@ -15,7 +15,10 @@ Rails.application.routes.draw do
   namespace :api do
     scope :routes do
       get '/' => 'routes#index'
+      get '/:route_id/vehicles' => 'routes#vehicles'
     end
+    
+    post '/vehicles' => 'vehicles#create'
     
     devise_scope :user do
       post 'users/login' => 'sessions#create'

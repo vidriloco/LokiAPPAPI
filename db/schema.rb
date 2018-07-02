@@ -25,14 +25,14 @@ ActiveRecord::Schema.define(version: 2018_06_05_220821) do
 
   create_table "paths", force: :cascade do |t|
     t.string "coordinates"
-    t.integer "direction"
+    t.integer "direction", default: 0
     t.integer "route_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "positions", force: :cascade do |t|
-    t.point "coordinates"
+    t.geography "coordinates", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.integer "user_id"
     t.integer "vehicle_id"
     t.integer "route_id"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2018_06_05_220821) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "vehicle_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -82,6 +83,7 @@ ActiveRecord::Schema.define(version: 2018_06_05_220821) do
   create_table "vehicles", force: :cascade do |t|
     t.string "identifier"
     t.integer "route_id"
+    t.geography "coordinates", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

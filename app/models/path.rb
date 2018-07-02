@@ -21,16 +21,25 @@ class Path < ApplicationRecord
     Path.direction_symbols[direction]
   end
   
+  def api_fields
+    { coordinates: hash_components, direction: direction_symbol }
+  end
+  
   def as_coordinates
-    Polylines::Decoder.decode_polyline(coordinates)
+    begin
+      Polylines::Decoder.decode_polyline(coordinates)
+    rescue
+      []
+    end
   end
   
   def as_coordinates_inverted_axis
     as_coordinates.map { |coordinate| [coordinate.last, coordinate.first] }
   end
   
-  def api_fields
-    { coordinates: coordinates, direction: direction_symbol }
+  private 
+  def hash_components
+    as_coordinates.map { |coordinate| { latitude: coordinate.first, longitude: coordinate.last } }
   end
 
 end

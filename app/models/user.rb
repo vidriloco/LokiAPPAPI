@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_many :tracking_allowances
   has_many :routes, through: 'tracking_allowances'
   
+  belongs_to :vehicle, required: false
+  
   before_save :ensure_authentication_token
   
   # Include default devise modules. Others available are:
@@ -38,6 +40,8 @@ class User < ApplicationRecord
       where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
+    else conditions.has_key?(:auth_token)
+      where(authentication_token: conditions[:auth_token]).first
     end
   end
 end
