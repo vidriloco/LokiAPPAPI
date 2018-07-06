@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     
     post '/vehicles' => 'vehicles#create'
     
+    scope :trackings do
+      post '/:route_id' => 'tracking_allowances#create'
+    end
+    
     devise_scope :user do
       post 'users/login' => 'sessions#create'
       post 'users/sign_up' => 'registrations#create'
