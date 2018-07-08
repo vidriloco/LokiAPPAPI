@@ -34,14 +34,15 @@ class Vehicle < ApplicationRecord
   end
   
   def self.update_location_for(vehicle_params, user_id, route_id)
+    automatic_identifier = "R#{route_id}-U#{user_id}"
     vehicle_identifier = vehicle_params[:identifier]
     
-    vehicle = Vehicle.where(identifier: vehicle_identifier)
+    vehicle = Vehicle.where(identifier: vehicle_identifier).or(Vehicle.where(identifier: automatic_identifier)).first
     
     # If vehicle is not yet registered (or identifier was not given), then generate a unique vehicle ID 
     # which will be used to relate the user to this particular route and vehicle
-    if vehicle.empty?
-      vehicle_identifier = "R#{route_id}-U#{user_id}" if vehicle_identifier.blank?
+    if vehicle.nil?
+      vehicle_identifier = automatic_identifier if vehicle_identifier.blank?
       vehicle = Vehicle.create(identifier: vehicle_identifier, route_id: route_id)
     end
     
