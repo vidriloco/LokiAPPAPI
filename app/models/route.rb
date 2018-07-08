@@ -13,7 +13,7 @@ class Route < ApplicationRecord
   end
   
   def api_fields_with(opts)
-    { id: id, name: name, subtitle: description, imageUrl: image_url, color: color, stroke: stroke, paths: paths.map(&:api_fields), allowsTracking: !tracking_allowances.where(user_id: opts[:user_id]).empty? }
+    { id: id, name: name, subtitle: description, imageUrl: image_url, color: color, stroke: stroke, paths: paths.map(&:api_fields), allowsTracking: !tracking_allowances.where(user_id: opts[:user_id], allowed_to_track: true).empty? }
   end
   
   def self.discoverable_by(user)
