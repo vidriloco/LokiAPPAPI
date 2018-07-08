@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_05_220821) do
+ActiveRecord::Schema.define(version: 2018_07_08_170015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2018_06_05_220821) do
     t.boolean "allowed_to_track"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "route_id"], name: "index_tracking_allowances_on_user_id_and_route_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -86,6 +87,7 @@ ActiveRecord::Schema.define(version: 2018_06_05_220821) do
     t.geography "coordinates", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["route_id", "identifier"], name: "index_vehicles_on_route_id_and_identifier", unique: true
   end
 
 end
