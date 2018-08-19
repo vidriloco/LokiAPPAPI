@@ -7,6 +7,6 @@ class Api::UsersController < Api::BaseController
     user = User.where(authentication_token: params[:token]).first
     
     render(json: { error: "Not allowed" }, status: 422) && return if user.nil?
-    render(json: { authentication_fields_for(user) }, status: 200)
+    render(json: authentication_fields_for(user), status: 200)
   end
 end
