@@ -6,5 +6,7 @@ class CreateVehicles < ActiveRecord::Migration[5.2]
       t.st_point  :coordinates, :geographic => true
       t.timestamps
     end
+    
+    add_index :vehicles, [:route_id, :identifier], unique: true
   end
 end

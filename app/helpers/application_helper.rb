@@ -1,6 +1,6 @@
 module ApplicationHelper
   def authentication_fields_for(user)
-    { user: { authToken: user.authentication_token, username: user.username, email: user.email }  }
+    { user: { authToken: user.authentication_token, username: user.username, email: user.email, role: user.role_name }  }
   end
   
   def error_message_for(user)

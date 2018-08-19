@@ -5,6 +5,7 @@ class CreatePositions < ActiveRecord::Migration[5.2]
       t.integer :user_id
       t.integer :vehicle_id
       t.integer :route_id
+      t.boolean :is_a_check_in
 
       t.timestamps
     end

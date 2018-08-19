@@ -39,6 +39,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
 
       t.timestamps null: false
       
+      t.integer :role_id, null: false
       t.integer :vehicle_id
     end
 

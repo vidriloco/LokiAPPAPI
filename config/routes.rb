@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :vehicles
       resources :positions
       resources :tracking_allowances
-      
+      resources :roles
       root to: "routes#index"
     end
   #root to: "home#index"
@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     devise_scope :user do
       post 'users/login' => 'sessions#create'
       post 'users/sign_up' => 'registrations#create'
+      get 'users/:token' => 'users#show'
     end
   end
   

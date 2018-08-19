@@ -11,6 +11,7 @@ class UserDashboard < Administrate::BaseDashboard
     id: Field::Number,
     email: Field::String,
     username: Field::String,
+    role_name: Field::Select.with_options(collection: Role.types),
     encrypted_password: Field::String,
     reset_password_token: Field::String,
     reset_password_sent_at: Field::DateTime,
@@ -33,7 +34,7 @@ class UserDashboard < Administrate::BaseDashboard
     :id,
     :email,
     :username,
-    :encrypted_password,
+    :role_name
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -42,6 +43,7 @@ class UserDashboard < Administrate::BaseDashboard
     :id,
     :email,
     :username,
+    :role_name,
     :encrypted_password,
     :reset_password_token,
     :reset_password_sent_at,
@@ -61,6 +63,7 @@ class UserDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :email,
     :username,
+    :role_name,
     :encrypted_password,
     :reset_password_token,
     :reset_password_sent_at,

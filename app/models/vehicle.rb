@@ -33,7 +33,7 @@ class Vehicle < ApplicationRecord
     [lat, lon]
   end
   
-  def self.update_location_for(vehicle_params, user_id, route_id)
+  def self.update_location_for(vehicle_params, user_id, route_id, is_a_check_in)
     automatic_identifier = "R#{route_id}-U#{user_id}"
     vehicle_identifier = vehicle_params[:identifier]
     
@@ -48,7 +48,7 @@ class Vehicle < ApplicationRecord
     
     # Add the coordinates to the list of positions of the vehicle and to it's last known position
     coordinates = "POINT(#{vehicle_params[:longitude].to_f} #{vehicle_params[:latitude].to_f})"
-    vehicle.positions.create(coordinates: coordinates, user_id: user_id, route_id: route_id)
+    vehicle.positions.create(coordinates: coordinates, user_id: user_id, route_id: route_id, is_a_check_in: is_a_check_in)
     
     vehicle.coordinates = coordinates
     vehicle.save
