@@ -12,7 +12,10 @@ class Vehicle < ApplicationRecord
   
   def self.discoverable_by_user_on_route(user_id, route_id)
     # TODO: Review this logic
-    Vehicle.includes(route: { tracking_allowances: :user }).where({tracking_allowances: { allowed_to_track: true, user_id: user_id }, vehicles: { route_id: route_id }}).where.not(vehicles: { coordinates: nil }).map(&:api_fields)
+    # Vehicle.includes(route: { tracking_allowances: :user }).where({tracking_allowances: { allowed_to_track: true, user_id: user_id }, vehicles: { route_id: route_id }}).where.not(vehicles: { coordinates: nil }).map(&:api_fields)
+    time_upper_bound = DateTime.now
+    time_bottom_bound = time_upper_bound-10.minutes
+    Vehicle.where(route_id: route_id, position_updated_at: time_bottom_bound..time_upper_bound).where.not(coordinates: nil).map(&:api_fields)
   end
   
   def api_fields
@@ -57,5 +60,6 @@ class Vehicle < ApplicationRecord
   private
   def assign_coordinates
     self.apply_geo({ "lon" => longitude, "lat" => latitude }) 
+    self.update({ position_updated_at: DateTime.now })
   end
 end

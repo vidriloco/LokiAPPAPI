@@ -7,6 +7,8 @@ class CreatePositions < ActiveRecord::Migration[5.2]
       t.integer :route_id
       t.boolean :is_a_check_in
 
+      t.datetime :position_updated_at
+
       t.timestamps
     end
   end
